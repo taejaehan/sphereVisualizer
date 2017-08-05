@@ -11,12 +11,10 @@ async function getComponent() {
 }
 
 getComponent().then(component => {
-	console.log('start');
 	document.body.style.margin = 0;
 	var clientId = 'z8Q1qQoDpUMvc7EdzaMEBNCXxmtcCFHn';
 	var analyser = new sound.default(clientId).analyser;
 	var sphereVisualizer = new sphere.default(analyser);
 	sphereVisualizer.loop();
 })
-
 

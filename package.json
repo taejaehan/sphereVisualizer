@@ -1,7 +1,7 @@
 {
-  "name": "p5_teamwork",
-  "version": "1.0.0",
-  "description": "",
+  "name": "sphereVisualizer",
+  "version": "0.0.1",
+  "description": "sphereVisualizer using three.js and soundCloud",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,9 +10,9 @@
     "serve": "serve",
     "start": "webpack-dev-server"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["three.js", "sound", "visualizer", "soundCloud"],
+  "author": "TaeJae Han <hantaejae@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.16",
     "file-loader": "^0.11.2",
