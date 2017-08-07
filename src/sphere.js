@@ -43,11 +43,12 @@ var Sphere = function(analyser) {
   var spheresPivot = new THREE.Object3D();
   sphere.add( spheresPivot );
   var pointTexture = new THREE.TextureLoader().load(mapImg);
-  for (var i=0 ; i<geometry.vertices.length ; i++){
+
+  geometry.vertices = shuffle(geometry.vertices);
+  var geoLen = geometry.vertices.length / 10;
+  for (var i=0 ; i<geoLen ; i++){
    var ran = Math.random();
    var size = Math.random() * (0.2 - 0.001) + 0.001;
-   var pos = Math.random() * size * 10;
-   var pos = 0;
    var size = 1;
    var addPos = 0;
    if(ran < 0.3){
@@ -72,30 +73,33 @@ var Sphere = function(analyser) {
    });
    pointMaterial.originSize = size;
    var x, y, z;
-   x = geometry.vertices[i].x + pos + geometry.vertices[i].x*addPos;  
-   y = geometry.vertices[i].y + pos + geometry.vertices[i].y*addPos;  
-   z = geometry.vertices[i].z + pos + geometry.vertices[i].z*addPos; 
+   x = geometry.vertices[i].x + geometry.vertices[i].x*addPos;  
+   y = geometry.vertices[i].y + geometry.vertices[i].y*addPos;  
+   z = geometry.vertices[i].z + geometry.vertices[i].z*addPos; 
 
    pointGeometry.vertices.push(new THREE.Vector3(x, y, z));
    points.push(new THREE.Points(pointGeometry, pointMaterial));
    spheresPivot.add(points[i]);
   }
-  points = shuffle(points);
-
+  var pLen = points.length;
+  console.log('pLen : ' + pLen);
+  
 
   this.loop = function animate() {
     var bufferLength = analyser.frequencyBinCount;
     var soundArr = new Uint8Array(bufferLength);
     analyser.getByteFrequencyData(soundArr);
-
-    spheresPivot.rotation.x -= sphereRotationSpeed * 5;
-    // spheresPivot.rotation.y -= sphereRotationSpeed * 2;
-    // spheresPivot.rotation.z -= sphereRotationSpeed * 3;
-    
-    for (var i=0 ; i<points.length ; i++){
+    soundArr = JSON.parse(JSON.stringify(soundArr));
+    var total = 0;
+    for (var i=0 ; i< pLen; i++){
+      total += soundArr[i];
       points[i].material.size = points[i].material.originSize * map(soundArr[i*4], 0, 255, minScale, maxScale);
       points[i].material.opacity = map(soundArr[i*4], 0, 255, minOpacity, maxOpacity);
     }
+    var avg = total / pLen;
+    spheresPivot.rotation.x -= sphereRotationSpeed * map(avg, 0, 255, 1, 15);
+    // spheresPivot.rotation.y -= sphereRotationSpeed * 2;
+    // spheresPivot.rotation.z -= sphereRotationSpeed * 3;
 
     camera.position.x = camRadius * Math.cos( camAngle );  
     camera.position.z = camRadius * Math.sin( camAngle );
