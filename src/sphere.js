@@ -35,7 +35,7 @@ var Sphere = function(analyser) {
   scene.add(light);
 
 
-  var geometry = new THREE.SphereGeometry( 10, 48, 48 );
+  var geometry = new THREE.SphereGeometry( 10, 24, 24 );
   var material = new THREE.MeshBasicMaterial( {color: 0xffff00, transparent: true, opacity: 0} );
   var sphere = new THREE.Mesh( geometry, material );
   scene.add( sphere );
@@ -45,7 +45,7 @@ var Sphere = function(analyser) {
   var pointTexture = new THREE.TextureLoader().load(mapImg);
 
   geometry.vertices = shuffle(geometry.vertices);
-  var geoLen = geometry.vertices.length / 10;
+  var geoLen = geometry.vertices.length / 5;
   for (var i=0 ; i<geoLen ; i++){
    var ran = Math.random();
    var size = Math.random() * (0.2 - 0.001) + 0.001;
@@ -93,8 +93,8 @@ var Sphere = function(analyser) {
     var total = 0;
     for (var i=0 ; i< pLen; i++){
       total += soundArr[i];
-      points[i].material.size = points[i].material.originSize * map(soundArr[i*4], 0, 255, minScale, maxScale);
-      points[i].material.opacity = map(soundArr[i*4], 0, 255, minOpacity, maxOpacity);
+      points[i].material.size = points[i].material.originSize * map(soundArr[i*5], 0, 255, minScale, maxScale);
+      points[i].material.opacity = map(soundArr[i*5], 0, 255, minOpacity, maxOpacity);
     }
     var avg = total / pLen;
     spheresPivot.rotation.x -= sphereRotationSpeed * map(avg, 0, 255, 1, 15);
