@@ -4,7 +4,8 @@ var Sound = function(id) {
   SC.initialize({
     client_id: clientId
   });
-  var track_url = 'https://soundcloud.com/idiotape/06-heyday-192rv';
+  // var track_url = 'https://soundcloud.com/idiotape/06-heyday-192rv';
+  var track_url = 'https://soundcloud.com/idiotape/heyday';
   var audio = new Audio();
       audio.ctx = new (window.AudioContext || window.webkitAudioContext);
   var source = audio.ctx.createMediaElementSource(audio);
@@ -17,7 +18,15 @@ var Sound = function(id) {
     var streamUrl = track.stream_url + '?client_id=' + clientId;
     audio.src = 'data:audio/mpeg;base64,/+MYxAAAAANIAUAAAASEEB/jwOFM/0MM/90b/+RhST//w4NFwOjf///PZu////9lns5GFDv//l9GlUIEEIAAAgIg8Ir/JGq3/+MYxDsLIj5QMYcoAP0dv9HIjUcH//yYSg+CIbkGP//8w0bLVjUP///3Z0x5QCAv/yLjwtGKTEFNRTMuOTeqqqqqqqqqqqqq/+MYxEkNmdJkUYc4AKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq';
     audio.setAttribute('src', streamUrl);
-    audio.play();
+    var promise= audio.play();
+    if (promise !== undefined) { promise.then(_ => { 
+      // Autoplay started! 
+      }).catch(error => { 
+        alert(error)
+        // Autoplay was prevented. 
+        // Show a "Play" button so that user can start playback. }); 
+      });
+    }
   };
   SC.resolve(track_url).then(getComments);
 };

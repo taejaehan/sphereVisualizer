@@ -10,7 +10,12 @@
     "serve": "serve",
     "start": "webpack-dev-server"
   },
-  "keywords": ["three.js", "sound", "visualizer", "soundCloud"],
+  "keywords": [
+    "three.js",
+    "sound",
+    "visualizer",
+    "soundCloud"
+  ],
   "author": "TaeJae Han <hantaejae@gmail.com>",
   "license": "MIT",
   "devDependencies": {
